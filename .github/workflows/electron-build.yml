@@ -1,0 +1,85 @@
+name: Electron App Build
+
+on:
+  push:
+    branches:
+      - main # Temporarily trigger on pushes to main for easier testing
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest, windows-latest]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Cache Node Modules
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Install dependencies (root)
+        run: npm ci
+      - name: Install React app dependencies
+        run: npm ci --prefix app
+      - name: Build React App
+        run: npm run build --prefix app
+      - name: Create build-app directory (if using custom script)
+        run: node scripts/prepare-app.js 2>&1 | tee prepare-app-log.txt
+      - name: Upload prepare-app log (on failure)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: prepare-app-script-log
+          path: prepare-app-log.txt
+      - name: Build Electron App (macOS)
+        if: runner.os == 'macOS'
+        run: npm run dist -- --mac dmg --universal --publish never
+      - name: Build Electron App (Windows)
+        if: runner.os == 'Windows'
+        run: npm run dist -- --win nsis --x64 --publish never
+      - name: Upload Artifacts (macOS)
+        if: runner.os == 'macOS'
+        uses: actions/upload-artifact@v4
+        with:
+          name: macOS-build
+          path: release/*.dmg
+      - name: Upload Artifacts (Windows)
+        if: runner.os == 'Windows'
+        uses: actions/upload-artifact@v4
+        with:
+          name: Windows-build
+          path: release/*.exe
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' # Trigger release on main branch pushes for testing
+    permissions:
+      contents: write
+    steps:
+      - name: Download all build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          files: |
+            artifacts/macOS-build/*.dmg
+            artifacts/Windows-build/*.exe
+          name: Debug Release - Main Branch
+          tag_name: temp-release-${{ github.sha }} # Use SHA for unique tag name on main pushes
+          body: "This is a temporary debug release triggered by a main branch push."
+          draft: true # Set to draft so it doesn't clutter releases
+          prerelease: true # Set to prerelease for testing
