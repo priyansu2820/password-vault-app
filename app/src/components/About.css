@@ -1,0 +1,116 @@
+/* app/src/components/About.css */
+
+/*
+  About Container
+  Centers the content and applies general page styling.
+*/
+.about-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh; /* Takes full viewport height */
+  background-color: var(--color-background-primary); /* Use global primary background */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Content box for the About information */
+.about-content {
+  background-color: var(--color-background-secondary); /* Use global secondary background */
+  padding: var(--spacing-unit) * 1.5; /* Adjusted padding (24px) */
+  border-radius: var(--border-radius-base); /* Inherit global border-radius */
+  box-shadow: 0 6px 15px var(--color-shadow-strong); /* Use stronger global shadow */
+  width: 100%;
+  max-width: 500px; /* Max width to keep content readable on larger screens */
+  text-align: center;
+}
+
+/* Styling for the main heading (App Name) */
+.about-content h2 {
+  color: var(--color-text-primary); /* Use global primary text color */
+  margin-bottom: var(--spacing-unit) * 1.25; /* Adjusted spacing (20px) */
+  font-size: 2em; /* Larger font size */
+}
+
+/* Styling for paragraphs */
+.about-content p {
+  color: var(--color-text-secondary); /* Use global secondary text color */
+  line-height: 1.6;
+  margin-bottom: var(--spacing-unit); /* Adjusted spacing (16px) */
+}
+
+/* Styling for strong/emphasized text */
+.about-content strong {
+  font-weight: bold;
+  color: var(--color-accent-primary); /* Use accent color for visual emphasis */
+}
+
+/* Styling for the Back button */
+.back-button {
+  width: 50%; /* Adjusted width for the button */
+  padding: 0.75rem 1.5rem; /* Consistent padding with global buttons */
+  margin-top: var(--spacing-unit) * 1.5; /* Adjusted top spacing (24px) */
+  background-color: var(--color-accent-primary); /* Use global accent color (blue) */
+  color: var(--color-text-light); /* Light text for contrast */
+  border: none;
+  border-radius: var(--border-radius-base);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle button shadow */
+}
+
+.back-button:hover {
+  background-color: var(--color-accent-hover); /* Darker blue on hover */
+  transform: translateY(-1px); /* Slight lift effect on hover */
+}
+
+.back-button:active {
+  transform: translateY(0); /* Reset lift effect on click */
+}
+
+
+/*
+  Responsive Adjustments for Smaller Screens
+*/
+@media (max-width: 768px) {
+  .about-container {
+    padding: 15px;
+  }
+
+  .about-content {
+    max-width: 95%; /* Allow content box to take more width */
+    padding: var(--spacing-unit); /* Reduce padding */
+  }
+
+  .about-content h2 {
+    font-size: 1.8em; /* Slightly smaller heading */
+  }
+
+  .about-content p {
+    font-size: 0.95em;
+  }
+
+  .back-button {
+    width: 60%; /* Adjust button width */
+    font-size: 0.9rem;
+    padding: 10px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-container {
+    padding: 10px;
+  }
+
+  .about-content {
+    padding: 0.75rem;
+    box-shadow: none; /* Remove shadow for very small screens */
+    border-radius: 0; /* Remove border-radius */
+  }
+
+  .about-content h2 {
+    font-size: 1.5em;
+  }
+}

@@ -1,0 +1,405 @@
+/* app/src/components/Dashboard.css */
+
+/*
+  Dashboard Container
+  Sets up a flex column layout for the entire dashboard to manage header, search, and list.
+*/
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensures the dashboard takes at least full viewport height */
+  background-color: var(--color-background-primary); /* Use global primary background */
+  color: var(--color-text-primary); /* Use global primary text color */
+  font-family: var(--font-family-primary); /* Use global font family */
+  box-sizing: border-box; /* Include padding and border in element's total width and height */
+}
+
+/*
+  Dashboard Header
+  Top bar containing app title and action buttons (e.g., Logout, Export/Import).
+*/
+.dashboard-header {
+  background-color: var(--color-background-secondary); /* Use global secondary background */
+  color: var(--color-text-primary); /* Header text color */
+  padding: var(--spacing-unit) * 0.75 var(--spacing-unit) * 1.25; /* 12px 20px */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px var(--color-shadow); /* Use global shadow */
+  flex-shrink: 0; /* Prevent header from shrinking when content grows */
+  border-bottom: 1px solid var(--color-border); /* Subtle border at the bottom */
+}
+
+.dashboard-header h2 {
+  margin: 0;
+  font-size: 1.5em; /* Larger title */
+  color: var(--color-text-primary); /* Ensure header title respects theme */
+}
+
+/* Container for header buttons (e.g., logout, export/import, theme toggle) */
+.dashboard-header .header-buttons-group {
+  display: flex;
+  gap: 10px; /* Space between the buttons */
+  align-items: center;
+}
+
+/* Theme Toggle Button - NEW STYLE */
+.theme-toggle-btn {
+  background-color: var(--color-text-secondary); /* Use a neutral color from global vars */
+  color: var(--color-text-light); /* Light text on dark button */
+  padding: 0.5rem 1rem; /* Consistent padding with other header buttons */
+  border: none;
+  border-radius: var(--border-radius-base); /* Inherit global border-radius */
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  box-shadow: 0 1px 3px var(--color-shadow);
+}
+
+.theme-toggle-btn:hover {
+  background-color: #5a6268; /* Darker grey on hover */
+  transform: translateY(-1px);
+}
+/* END NEW STYLE */
+
+
+/* Logout button */
+.logout-btn {
+  background-color: var(--color-error); /* Use global error color (red) */
+  color: var(--color-text-light); /* Light text on dark button */
+  padding: 0.5rem 1rem; /* 8px 16px */
+  border: none;
+  border-radius: var(--border-radius-base); /* Inherit global border-radius */
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  box-shadow: 0 1px 3px var(--color-shadow);
+}
+
+.logout-btn:hover {
+  background-color: #c0392b; /* A bit darker red */
+  transform: translateY(-1px);
+}
+
+/* Export/Import Vault buttons */
+.export-vault-btn,
+.import-vault-btn {
+  background-color: var(--color-text-secondary); /* Dark grey, using secondary text color for contrast */
+  color: var(--color-text-light);
+  padding: 0.5rem 1rem; /* 8px 16px */
+  border: none;
+  border-radius: var(--border-radius-base);
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  box-shadow: 0 1px 3px var(--color-shadow);
+}
+
+.export-vault-btn:hover,
+.import-vault-btn:hover {
+  background-color: #4a5a6b; /* Darker shade of the button color */
+  transform: translateY(-1px);
+}
+
+/*
+  Password List Header
+  Contains "My Passwords" title and "Add New" button.
+*/
+.password-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-unit) * 0.75 var(--spacing-unit) * 1.25; /* 12px 20px */
+  background-color: var(--color-background-primary); /* Match primary background */
+  border-bottom: 1px solid var(--color-border); /* Use global border */
+  flex-shrink: 0; /* Prevent from shrinking */
+  color: var(--color-text-primary);
+}
+
+.password-list-header h3 {
+  margin: 0;
+  font-size: 1.2em;
+  color: var(--color-text-primary);
+}
+
+/* Add New button */
+.add-btn {
+  background-color: var(--color-accent-primary); /* Use global accent color (blue) */
+  color: var(--color-text-light);
+  padding: 0.5rem 1rem; /* 8px 16px */
+  border: none;
+  border-radius: var(--border-radius-base);
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  box-shadow: 0 1px 3px var(--color-shadow);
+}
+
+.add-btn:hover {
+  background-color: var(--color-accent-hover); /* Darker accent on hover */
+  transform: translateY(-1px);
+}
+
+/*
+  Search Bar
+*/
+.search-bar {
+  padding: var(--spacing-unit) var(--spacing-unit) * 1.25 0; /* 16px 20px 0px (top, horizontal, bottom) */
+  flex-shrink: 0; /* Prevent from shrinking */
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.75rem 1rem; /* 12px 16px */
+  border: 1px solid var(--color-border); /* Use global border */
+  border-radius: var(--border-radius-base);
+  font-size: 1em;
+  box-sizing: border-box;
+  background-color: var(--color-background-secondary); /* Input background */
+  color: var(--color-text-primary); /* Input text color */
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-input:focus {
+  border-color: var(--color-accent-primary);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+/*
+  Password List
+  The main scrollable area for password entries.
+*/
+.password-list {
+  flex-grow: 1; /* Allows the list to take all available space */
+  overflow-y: auto; /* Enables vertical scrolling */
+  padding: 0 var(--spacing-unit) * 1.25 var(--spacing-unit) * 1.25; /* 0px 20px 20px */
+  /*
+    Calculate max-height dynamically if needed, but flex-grow/overflow-y is often sufficient.
+    If you need a specific max-height, ensure it adapts to header/search bar changes.
+  */
+}
+
+/*
+  Individual Password Item
+*/
+.password-item {
+  background-color: var(--color-background-secondary); /* Use global secondary background */
+  border: 1px solid var(--color-border); /* Use global border */
+  border-radius: var(--border-radius-base);
+  margin-bottom: var(--spacing-unit); /* 16px */
+  padding: var(--spacing-unit); /* 16px */
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start; /* Align to top */
+  box-shadow: 0 1px 3px var(--color-shadow);
+  transition: transform 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
+}
+
+.password-item:hover {
+  transform: translateY(-2px); /* Slight lift on hover */
+  box-shadow: 0 4px 8px var(--color-shadow-strong); /* More pronounced shadow on hover */
+}
+
+/* Details section of each password item */
+.item-details {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* Space between detail lines */
+  word-break: break-all; /* Prevents long URLs/usernames from overflowing */
+  margin-right: var(--spacing-unit); /* Space from action buttons */
+}
+
+.item-details strong {
+  font-size: 1.1em;
+  color: var(--color-text-primary);
+}
+
+.item-notes {
+  font-size: 0.9em;
+  color: var(--color-text-secondary); /* Lighter color for notes */
+  font-style: italic;
+}
+
+/* Actions section (Edit, Delete, Copy, Toggle Password) */
+.item-actions {
+  display: flex;
+  flex-wrap: wrap; /* Allow buttons to wrap on small screens */
+  gap: 0.5rem; /* 8px space between buttons */
+  flex-shrink: 0; /* Prevent actions from shrinking */
+  justify-content: flex-end; /* Align buttons to the right if they wrap */
+  align-items: center; /* Vertically align actions */
+}
+
+.edit-btn,
+.delete-btn,
+.copy-btn,
+.toggle-password-btn {
+  padding: 0.4rem 0.8rem; /* 6.4px 12.8px */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8em;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  box-shadow: 0 1px 2px var(--color-shadow);
+}
+
+.edit-btn {
+  background-color: var(--color-warning); /* Use global warning color (orange) */
+  color: var(--color-text-primary); /* Dark text on light button */
+}
+
+.edit-btn:hover {
+  background-color: #e67e22; /* Darker orange */
+  transform: translateY(-1px);
+}
+
+.delete-btn {
+  background-color: var(--color-error); /* Use global error color (red) */
+  color: var(--color-text-light); /* Light text on dark button */
+}
+
+.delete-btn:hover {
+  background-color: #c0392b; /* Darker red */
+  transform: translateY(-1px);
+}
+
+.copy-btn {
+  background-color: #1abc9c; /* Teal for copy (can use accent or success) */
+  color: var(--color-text-light);
+}
+
+.copy-btn:hover {
+  background-color: #16a085;
+  transform: translateY(-1px);
+}
+
+/* Password display area including toggle and copy */
+.password-display-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Space between password text and buttons */
+  flex-wrap: wrap; /* Allow wrapping of password text/buttons if needed */
+  margin-top: 5px; /* Small space below other details if needed */
+}
+
+.toggle-password-btn {
+  background-color: var(--color-accent-primary); /* Blue for toggle */
+  color: var(--color-text-light);
+}
+
+.toggle-password-btn:hover {
+  background-color: var(--color-accent-hover);
+  transform: translateY(-1px);
+}
+
+/* Message when no entries are found */
+.no-entries-message {
+  text-align: center;
+  padding: 20px;
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+
+/*
+  Responsive Adjustments for Smaller Screens
+*/
+@media (max-width: 768px) {
+  .dashboard-header,
+  .password-list-header,
+  .search-bar {
+    padding: 10px 15px; /* Reduce horizontal padding */
+  }
+
+  .dashboard-header h2,
+  .password-list-header h3 {
+    font-size: 1.2em; /* Smaller headings */
+  }
+
+  .logout-btn,
+  .add-btn,
+  .export-vault-btn,
+  .import-vault-btn,
+  .theme-toggle-btn { /* ADDED theme-toggle-btn to this media query */
+    padding: 6px 12px; /* Smaller buttons */
+    font-size: 0.8em;
+  }
+
+  .search-input {
+    padding: 8px 12px;
+    font-size: 0.9em;
+  }
+
+  .password-list {
+    padding: 0 15px 15px; /* Reduce horizontal padding */
+  }
+
+  .password-item {
+    flex-direction: column; /* Stack details and actions vertically */
+    align-items: stretch; /* Stretch content within column */
+    padding: 12px;
+  }
+
+  .item-details {
+    margin-right: 0; /* Remove right margin */
+    margin-bottom: 10px; /* Add space below details when stacked */
+  }
+
+  .item-details strong {
+    font-size: 1em;
+  }
+
+  .item-notes {
+    font-size: 0.85em;
+  }
+
+  .item-actions {
+    flex-direction: row; /* Keep action buttons in a row */
+    justify-content: flex-start; /* Align actions to the left */
+    gap: 8px; /* Space between action buttons */
+    width: 100%;
+  }
+
+  .edit-btn,
+  .delete-btn,
+  .copy-btn,
+  .toggle-password-btn {
+    padding: 5px 10px;
+    font-size: 0.75em;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-container {
+    padding-top: 0;
+  }
+
+  .dashboard-header,
+  .password-list-header,
+  .search-bar {
+    padding: 8px 10px;
+  }
+
+  .dashboard-header h2,
+  .password-list-header h3 {
+    font-size: 1.1em;
+  }
+
+  .password-list {
+    padding: 0 10px 10px;
+  }
+
+  .password-item {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px; /* Slightly less rounded */
+    box-shadow: none; /* Remove shadow on very small screens */
+  }
+
+  .search-input {
+    padding: 7px 10px;
+    font-size: 0.85em;
+  }
+}

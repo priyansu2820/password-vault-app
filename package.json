@@ -1,0 +1,56 @@
+{
+  "name": "password-manager",
+  "version": "1.0.0",
+  "description": "A simple Electron password manager with encryption.",
+  "main": "electron/main.js",
+  "scripts": {
+    "start": "NODE_ENV=development electron .",
+    "dev-react": "npm run dev --prefix app",
+    "build-react": "npm run build --prefix app",
+    "pack": "electron-builder --dir",
+    "dist": "npm run pre-dist && electron-builder",
+    "pre-dist": "node scripts/prepare-app.js"
+  },
+  "keywords": [],
+  "author": "Priyansu Kundu",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "29.1.0",
+    "electron-builder": "^26.0.12"
+  },
+  "dependencies": {
+    "crypto": "^1.0.1",
+    "fs": "^0.0.1-security",
+    "path": "^0.12.7",
+    "fs-extra": "^11.2.0",
+    "bcrypt": "^5.1.1"
+  },
+  "build": {
+    "appId": "com.priyansukundu.passwordmanager",
+    "productName": "Password Vault",
+    "extraMetadata": {
+      "main": "main.js"
+    },
+    "directories": {
+      "output": "release",
+      "app": "build-app"
+    },
+    "files": [
+      "**/*"
+    ],
+    "asar": false,
+    "win": {
+      "target": "nsis",
+      "icon": "icon.ico"
+      
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "icon.icns"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "icon.png"
+    }
+  }
+}
