@@ -1,68 +1,76 @@
-node_modules
-    # Logs
-    logs
-    *.log
-    npm-debug.log*
-    yarn-debug.log*
-    yarn-error.log*
-    lerna-debug.log*
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
 
-    # Dependency directories
-    node_modules/
+# Dependency directories
+node_modules/
+.npm/
+.pnpm-store/
 
-    # Optional npm cache directory
-    .npm/
+# Optional eslint cache
+.eslintcache
 
-    # Optional eslint cache
-    .eslintcache
+# Build artifacts
+build/              # General build directory
+dist/               # General distribution directory
+release/            # Electron-builder output directory for installers/executables
+build-app/          # Electron-builder's intermediate app directory (where React build is moved)
+app/dist/           # React app's build output directory
+app/build/          # Alternative React app build output directory
 
-    # Compiled JavaScript files (if your React build outputs to 'build' instead of 'app/dist')
-    build/
+# macOS specific files
+.DS_Store
+*.orig
+*.dmg
+*.pkg
+*.app
 
-    # Electron-related build output
-    dist/ # If your Electron output directly goes into a 'dist' folder at root
-    release/
-    app/dist/ # Your React build output
-    build-app/
+# Windows specific files
+*.exe
+*.dll
+*.exp
+*.lib
+*.pdb
+*.zip
+*.tar.gz
+out/                # Common Electron build output for unpacked apps on Windows
+electron-build/     # Another possible Electron build directory
 
-    # macOS specific files
-    .DS_Store
-    *.dmg
-    *.pkg
-    *.app
+# Linux specific files
+*.AppImage          # Electron-builder output for AppImage
 
-    # Windows specific files
-    *.exe
-    *.dll
-    *.exp
-    *.lib
-    *.pdb
-    *.zip
-    *.tar.gz
-    out/
-    # If electron-builder puts unpacked app here:
-    electron-build/
+# Local configuration files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.*.local
+app-config.json     # Application runtime configuration (should not be committed)
+vault.dat           # Encrypted vault data file (should not be committed)
 
-    # Local configuration files
-    .env
-    .env.local
-    .env.development.local
-    .env.test.local
-    .env.production.local
-    .env.*.local
-    # Application runtime configuration, should not be committed
-    app-config.json
-    vault.dat
+# IDE specific files
+.vscode/            # Visual Studio Code specific files
+.idea/              # IntelliJ IDEA / WebStorm specific files
+*.sublime-project
+*.sublime-workspace
 
-    # IDE specific files
-    .vscode/
-    .idea/
-    *.sublime-project
-    *.sublime-workspace
+# Electron-specific ignores
+*.asar
+*.asar.unpacked
+# Explicitly keep icon files if they are part of your source and needed for builds
+!icon.ico
+!icon.icns
+!icon.png
+# If you have icon files that are generated or temporary, you can ignore them like:
+# icon.ico*
 
-    # Thumbnails
-    .thumbnails/
+# Thumbnails
+.thumbnails/
 
-    # Crash reports
-    Crashpad/
-    
+# Crash reports
+Crashpad/
