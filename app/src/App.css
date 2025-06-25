@@ -1,0 +1,193 @@
+/* app/src/App.css */
+
+/*
+  Global CSS Variables for Theming (Light Mode by default)
+  These variables define your application's color palette.
+*/
+:root {
+  /* Background colors */
+  --color-background-primary: #f5f7fa; /* Light grey/off-white */
+  --color-background-secondary: #ffffff; /* Pure white for cards/forms */
+
+  /* Text colors */
+  --color-text-primary: #333333; /* Dark grey for main text */
+  --color-text-secondary: #666666; /* Medium grey for less emphasis */
+  --color-text-light: #eeeeee; /* Light grey for dark mode backgrounds */
+
+  /* Accent/Brand colors */
+  --color-accent-primary: #007bff; /* Blue */
+  --color-accent-hover: #0056b3; /* Darker blue on hover */
+  --color-success: #28a745; /* Green for success messages/buttons */
+  --color-success-hover: #218838;
+  --color-error: #dc3545; /* Red for error messages */
+  --color-warning: #ffc107; /* Yellow for warnings */
+
+  /* Border/Shadows */
+  --color-border: #e0e0e0;
+  --color-shadow: rgba(0, 0, 0, 0.1);
+  --color-shadow-strong: rgba(0, 0, 0, 0.2);
+
+  /* Font & Spacing */
+  --font-family-primary: 'Inter', sans-serif;
+  --spacing-unit: 1rem; /* Base spacing unit (16px) */
+  --border-radius-base: 8px;
+}
+
+/*
+  Dark Mode Theme Variables
+  These override the light mode variables when the 'dark-theme' class is applied to <html> or <body>.
+*/
+.dark-theme {
+  --color-background-primary: #282c34; /* Dark background */
+  --color-background-secondary: #3a3f4a; /* Slightly lighter dark for cards/forms */
+
+  --color-text-primary: #f5f5f5; /* Light text */
+  --color-text-secondary: #bbbbbb; /* Lighter grey for less emphasis */
+  --color-text-light: #222222; /* Dark text for light mode elements on dark backgrounds */
+
+  --color-accent-primary: #61dafb; /* Cyan for accents */
+  --color-accent-hover: #21a1f1;
+  --color-success: #4CAF50;
+  --color-success-hover: #45a049;
+  --color-error: #ff6b6b;
+  --color-warning: #ffd700;
+
+  --color-border: #4a4a4a;
+  --color-shadow: rgba(0, 0, 0, 0.3);
+  --color-shadow-strong: rgba(0, 0, 0, 0.5);
+}
+
+/* Base styles for HTML and Body elements */
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh; /* Ensure body/root takes full viewport height */
+  box-sizing: border-box; /* Include padding/border in element's total width/height */
+  font-family: var(--font-family-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for theme changes */
+}
+
+/* Apply theme colors to the body */
+body {
+  background-color: var(--color-background-primary);
+  color: var(--color-text-primary);
+}
+
+/* Default font size for better readability on various screens */
+body {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* Styling for headings (h1, h2, etc.) */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--color-text-primary);
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+/* General button styling */
+button {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border-radius: var(--border-radius-base);
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  background-color: var(--color-accent-primary);
+  color: var(--color-text-light);
+}
+
+button:hover {
+  background-color: var(--color-accent-hover);
+}
+
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+button:disabled {
+  background-color: var(--color-border);
+  color: var(--color-text-secondary);
+  cursor: not-allowed;
+}
+
+/* Input field styling */
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-base);
+  background-color: var(--color-background-secondary);
+  color: var(--color-text-primary);
+  box-sizing: border-box; /* Crucial for consistent width */
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus {
+  border-color: var(--color-accent-primary);
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* Focus ring effect */
+  outline: none;
+}
+
+/* Error message styling (used by components like Login, Setup, ForgotPassword) */
+.error-message {
+  color: var(--color-error);
+  margin-top: 0.5rem;
+  font-size: 0.9em;
+  text-align: center;
+}
+
+/* Styling for form groups to ensure proper spacing */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--color-text-primary);
+  font-weight: bold;
+}
+
+
+/*
+  Responsive Design - Basic media queries for smaller screens
+  (Further component-specific responsive rules go in their respective CSS files)
+*/
+@media (max-width: 768px) {
+  body {
+    font-size: 15px; /* Slightly smaller base font on smaller screens */
+  }
+
+  /* Adjust padding for root on smaller screens */
+  #root {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 14px; /* Even smaller base font on very small screens */
+  }
+
+  /* Reduce padding even more for very small screens */
+  #root {
+    padding: 0.5rem;
+  }
+}
+
+/*
+  NOTE: The original .logo, .card, .read-the-docs, and keyframes
+  from the Vite boilerplate are removed as they are not globally relevant
+  for a password manager application. Component-specific styling should
+  be handled in their own CSS files (e.g., Login.css, Setup.css).
+*/

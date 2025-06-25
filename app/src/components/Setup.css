@@ -1,0 +1,171 @@
+/* app/src/components/Setup.css */
+
+/*
+  Setup Container
+  Centers the form on the screen and applies general styling.
+*/
+.setup-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh; /* Takes full viewport height */
+  background-color: var(--color-background-primary); /* Use global primary background */
+  padding: 20px;
+  box-sizing: border-box; /* Ensures padding doesn't push element out */
+}
+
+/* Styling for the main heading */
+.setup-container h2 {
+  color: var(--color-text-primary); /* Use global primary text color */
+  margin-bottom: var(--spacing-unit) * 0.75; /* Adjusted spacing (12px) */
+  font-size: 1.8rem;
+}
+
+/* Styling for introductory paragraph */
+.setup-container p {
+  color: var(--color-text-secondary); /* Use global secondary text color */
+  margin-bottom: var(--spacing-unit) * 1.25; /* Adjusted spacing (20px) */
+  text-align: center;
+  max-width: 400px;
+  line-height: 1.6;
+}
+
+/* Styling for the form container itself */
+.setup-container form {
+  background-color: var(--color-background-secondary); /* Use global secondary background */
+  padding: var(--spacing-unit) * 1.5; /* Adjusted padding (24px) */
+  border-radius: var(--border-radius-base); /* Inherit global border-radius */
+  box-shadow: 0 4px 10px var(--color-shadow); /* Use global shadow variable */
+  width: 100%;
+  max-width: 450px; /* Slightly wider than login for more content */
+}
+
+/* Styling for sub-headings (e.g., Security Question) */
+.setup-container h3 {
+  color: var(--color-text-primary); /* Use global primary text color */
+  margin-top: var(--spacing-unit) * 1.5; /* Adjusted top spacing (24px) */
+  margin-bottom: var(--spacing-unit); /* Adjusted bottom spacing (16px) */
+  border-bottom: 1px solid var(--color-border); /* Use global border color */
+  padding-bottom: 0.5rem; /* Space below border */
+  font-size: 1.2rem;
+}
+
+/* Styling for individual form groups (label + input) */
+.form-group {
+  margin-bottom: var(--spacing-unit); /* Using global spacing unit (16px) */
+  width: 100%;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--color-text-primary);
+  font-weight: bold;
+  font-size: 0.95rem;
+}
+
+/* Styling for input fields (password and text) */
+.form-group input[type="password"],
+.form-group input[type="text"] {
+  width: 100%; /* Take full width, box-sizing handles padding */
+  padding: 0.75rem 1rem; /* Padding for input field */
+  border: 1px solid var(--color-border); /* Use global border color */
+  border-radius: var(--border-radius-base); /* Inherit global border-radius */
+  font-size: 1rem; /* Inherit global font size */
+  background-color: var(--color-background-secondary); /* Input background */
+  color: var(--color-text-primary); /* Input text color */
+  box-sizing: border-box; /* IMPORTANT for width consistency */
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Styling for input fields on focus */
+.form-group input[type="password"]:focus,
+.form-group input[type="text"]:focus {
+  border-color: var(--color-accent-primary); /* Accent color on focus */
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* Focus ring effect */
+}
+
+/* Styling for error messages */
+.error-message {
+  color: var(--color-error); /* Use global error color */
+  margin-top: 0.75rem;
+  margin-bottom: 1.25rem;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+/* Styling for the submit button */
+.setup-container button[type="submit"] {
+  width: 100%;
+  padding: 0.75rem 1.5rem; /* Consistent padding with global buttons */
+  background-color: var(--color-success); /* Use global success color (green) */
+  color: var(--color-text-light); /* Light text on dark button */
+  border: none;
+  border-radius: var(--border-radius-base);
+  font-size: 1.1rem; /* Slightly larger font for main buttons */
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-top: var(--spacing-unit) * 1.25; /* Adjusted top spacing (20px) */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle button shadow */
+}
+
+.setup-container button[type="submit"]:hover:not(:disabled) {
+  background-color: var(--color-success-hover); /* Darker green on hover */
+  transform: translateY(-1px); /* Slight lift */
+}
+
+/* Disabled button state */
+.setup-container button[type="submit"]:disabled {
+  background-color: var(--color-border); /* Greyed out background */
+  color: var(--color-text-secondary); /* Greyed out text */
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+
+/*
+  Responsive Adjustments for Smaller Screens
+*/
+@media (max-width: 768px) {
+  .setup-container {
+    padding: 15px;
+  }
+
+  .setup-container form {
+    max-width: 95%; /* Allow form to take more width */
+    padding: var(--spacing-unit); /* Reduce padding */
+  }
+
+  .setup-container h2 {
+    font-size: 1.6rem;
+  }
+
+  .setup-container p {
+    font-size: 0.9rem;
+  }
+
+  .form-group input {
+    font-size: 0.9rem;
+    padding: 0.65rem 0.8rem;
+  }
+
+  .setup-container button[type="submit"] {
+    font-size: 1rem;
+    padding: 10px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .setup-container {
+    padding: 10px;
+  }
+
+  .setup-container form {
+    padding: 0.75rem; /* Further reduce padding */
+    box-shadow: none; /* Remove shadow for very small screens */
+    border-radius: 0; /* Remove border-radius */
+  }
+}
