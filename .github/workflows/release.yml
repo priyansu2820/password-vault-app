@@ -92,6 +92,17 @@ jobs:
         with:
           path: artifacts # Download all artifacts into an 'artifacts' directory
 
+      - name: Debug: List downloaded artifacts
+        run: |
+          echo "Listing contents of artifacts/macOS-build/"
+          ls -al artifacts/macOS-build/
+          echo "Listing contents of artifacts/Windows-build/"
+          ls -al artifacts/Windows-build/
+          echo "Current working directory:"
+          pwd
+          echo "Contents of current working directory:"
+          ls -al
+
       - name: Create Release
         id: create_release
         uses: softprops/action-gh-release@v2 # Use a community action to create releases
