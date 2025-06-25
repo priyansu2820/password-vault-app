@@ -40,8 +40,17 @@ jobs:
         run: npm run build --prefix app
 
       - name: Create build-app directory (if using custom script)
-        run: node scripts/prepare-app.js
-        # This runs your existing 'pre-dist' script
+        run: |
+          set -ex # Exit immediately if a command exits with a non-zero status. Print commands.
+          node scripts/prepare-app.js 2>&1 | tee prepare-app-log.txt
+          # 2>&1 redirects stderr to stdout. tee saves output to file AND prints to console.
+
+      - name: Upload prepare-app log (on failure)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: prepare-app-script-log
+          path: prepare-app-log.txt
 
       - name: Build Electron App (macOS)
         if: runner.os == 'macOS'
