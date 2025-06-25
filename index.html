@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Vault - Your Secure Digital Fortress</title>
+    <!-- Tailwind CSS CDN for quick styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%); /* Subtle gradient background */
+            overflow-x: hidden; /* Prevent horizontal scroll due to animations */
+        }
+
+        /* Custom CSS for Glowing Animation */
+        @keyframes multicolor-glow {
+            0% { box-shadow: 0 0 25px 10px rgba(255, 0, 0, 0.75), 0 0 10px 4px rgba(255, 0, 0, 0.9); border-color: rgba(255, 0, 0, 0.9); }
+            16% { box-shadow: 0 0 25px 10px rgba(255, 127, 0, 0.75), 0 0 10px 4px rgba(255, 127, 0, 0.9); border-color: rgba(255, 127, 0, 0.9); }
+            33% { box-shadow: 0 0 25px 10px rgba(255, 255, 0, 0.75), 0 0 10px 4px rgba(255, 255, 0, 0.9); border-color: rgba(255, 255, 0, 0.9); }
+            50% { box-shadow: 0 0 25px 10px rgba(0, 255, 0, 0.75), 0 0 10px 4px rgba(0, 255, 0, 0.9); border-color: rgba(0, 255, 0, 0.9); }
+            66% { box-shadow: 0 0 25px 10px rgba(0, 0, 255, 0.75), 0 0 10px 4px rgba(0, 0, 255, 0.9); border-color: rgba(0, 0, 255, 0.9); }
+            83% { box-shadow: 0 0 25px 10px rgba(75, 0, 130, 0.75), 0 0 10px 4px rgba(75, 0, 130, 0.9); border-color: rgba(75, 0, 130, 0.9); }
+            100% { box-shadow: 0 0 25px 10px rgba(148, 0, 211, 0.75), 0 0 10px 4px rgba(148, 0, 211, 0.9); border-color: rgba(148, 0, 211, 0.9); }
+        }
+
+        .glow-active {
+            animation: multicolor-glow 2s ease-in-out infinite alternate; /* Slower, smoother, infinite glow */
+        }
+        
+        /* Entrance Animations */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.7); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes pulseFade {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        
+        @keyframes slideInRight { /* Renamed for clarity - now comes from right */
+            0% { opacity: 0; transform: translateX(100%); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Base classes for elements that will animate on scroll */
+        .animate-on-scroll {
+            opacity: 0; /* Hidden by default */
+            transform: translateY(20px); /* Slight initial offset */
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out; /* Smooth transition for basic reveal */
+        }
+
+        /* Animation classes to be added by JS when in view */
+        .animate-on-scroll.is-in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Specific timings for elements within sections if needed */
+        .animate-on-scroll.is-in-view.delay-100 { animation-delay: 0.1s; }
+        .animate-on-scroll.is-in-view.delay-200 { animation-delay: 0.2s; }
+        .animate-on-scroll.is-in-view.delay-300 { animation-delay: 0.3s; }
+        .animate-on-scroll.is-in-view.delay-400 { animation-delay: 0.4s; }
+        .animate-on-scroll.is-in-view.delay-500 { animation-delay: 0.5s; }
+        .animate-on-scroll.is-in-view.delay-600 { animation-delay: 0.6s; }
+
+
+        /* Hero section specific animations - trigger on load */
+        .hero-animate-fade-in-down { animation: fadeInDown 1s ease-out forwards; opacity: 0; animation-fill-mode: both; }
+        .hero-animate-fade-in-up { animation: fadeInUp 1s ease-out forwards; animation-delay: 0.3s; opacity: 0; animation-fill-mode: both; }
+        .hero-animate-pop-in { animation: popIn 0.8s ease-out forwards; animation-delay: 0.6s; opacity: 0; animation-fill-mode: both; }
+        .hero-animate-pulse-fade { animation: pulseFade 2s infinite ease-in-out; }
+
+        /* List item hover effect */
+        .list-item-hover:hover {
+            transform: translateX(5px);
+            color: #4a0e91; /* Darker purple on hover */
+            text-shadow: 0 0 5px rgba(100, 0, 200, 0.3);
+        }
+
+        /* Specific style for the disclaimer banner */
+        .disclaimer-banner {
+            animation: slideInRight 1.5s ease-out forwards; /* Apply the new slide animation */
+            width: 100%;
+            max-width: 800px; /* Constrain width for better readability */
+            margin: 2rem auto; /* Center it with auto margins */
+            padding: 1rem;
+            background-color: #fee2e2; /* Light red background */
+            color: #dc2626; /* Darker red text */
+            font-weight: bold;
+            text-align: center;
+            border-radius: 0.75rem; /* Rounded corners */
+            box-shadow: 0 4px 10px rgba(220, 38, 38, 0.2); /* Red shadow */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+        .disclaimer-banner span {
+            margin-right: 0.5rem;
+            font-size: 1.5em; /* Larger star */
+        }
+
+        /* Contact Us specific styles */
+        .contact-email-link {
+            color: #007bff; /* Blue link color */
+            text-decoration: underline;
+            font-weight: bold;
+        }
+        .contact-email-link:hover {
+            color: #0056b3; /* Darker blue on hover */
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center min-h-screen text-gray-800">
+    <!-- Navigation Bar -->
+    <nav class="w-full bg-indigo-800 p-4 shadow-xl fixed top-0 z-50">
+        <div class="max-w-7xl mx-auto flex justify-between items-center px-4">
+            <a href="#" class="text-white text-3xl font-extrabold rounded-lg px-3 py-1 transition-colors hover:bg-indigo-700">
+                🔐 Password Vault
+            </a>
+            <div class="space-x-6">
+                <a href="#about-app" class="text-indigo-200 text-lg hover:text-white transition-colors duration-200">About</a>
+                <a href="#download-section" class="text-indigo-200 text-lg hover:text-white transition-colors duration-200">Download</a>
+                <a href="#contact-us" class="text-indigo-200 text-lg hover:text-white transition-colors duration-200">Contact Us</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative w-full py-24 md:py-32 flex items-center justify-center bg-gradient-to-r from-blue-600 to-indigo-700 text-white shadow-lg mt-16 md:mt-20">
+        <div class="text-center px-6 max-w-4xl mx-auto">
+            <h1 class="text-5xl md:text-6xl font-extrabold leading-tight mb-6 hero-animate-fade-in-down">
+                Your Secure Digital Fortress
+            </h1>
+            <p class="text-xl md:text-2xl font-light opacity-90 mb-10 hero-animate-fade-in-up">
+                Password Vault: Simple, Strong, Local. Keep your credentials safe, always.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6 hero-animate-pop-in">
+                <!-- Download Button for macOS -->
+                <a href="YOUR_MACOS_DOWNLOAD_URL_HERE"
+                   class="inline-flex items-center justify-center px-8 py-4 border border-transparent text-xl font-bold rounded-xl shadow-lg text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-4 focus:ring-green-400 focus:ring-offset-2 transition-all duration-300 transform hover:scale-105 active:scale-95 group">
+                    <svg class="w-7 h-7 mr-3 transition-transform group-hover:rotate-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1h-1.25M15 10l4.55 4.55M14.5 14.5l3.227 3.227M6 10l-4.55 4.55M9 14.5L5.773 17.727M21 12v3a2 2 0 01-2 2H5a2 2 0 01-2-2v-3m18-6H3a2 2 0 00-2 2v2a2 2 0 002 2h18a2 2 0 002-2V8a2 2 0 00-2-2z"></path></svg>
+                    Download for macOS
+                </a>
+
+                <!-- Download Button for Windows -->
+                <a href="YOUR_WINDOWS_DOWNLOAD_URL_HERE"
+                   class="inline-flex items-center justify-center px-8 py-4 border border-white text-xl font-bold rounded-xl shadow-lg text-blue-900 bg-white hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-blue-300 focus:ring-offset-2 transition-all duration-300 transform hover:scale-105 active:scale-95 group">
+                    <svg class="w-7 h-7 mr-3 transition-transform group-hover:rotate-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1h-1.25M15 10l4.55 4.55M14.5 14.5l3.227 3.227M6 10l-4.55 4.55M9 14.5L5.773 17.727M21 12v3a2 2 0 01-2 2H5a2 2 0 01-2-2v-3m18-6H3a2 2 0 00-2 2v2a2 2 0 002 2h18a2 2 0 002-2V8a2 2 0 00-2-2z"></path></svg>
+                    Download for Windows
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="w-full max-w-6xl mx-auto px-4 py-12">
+        <!-- Disclaimer Banner -->
+        <div class="disclaimer-banner animate-on-scroll delay-100">
+            <span>⚠️</span> WARNING: Resetting your master password means **previously saved vault data will be permanently inaccessible!**
+        </div>
+
+        <!-- About App Section -->
+        <section id="about-app" class="bg-white p-8 md:p-12 rounded-xl shadow-xl mb-12 transform transition-transform hover:scale-[1.01] duration-300 ease-in-out animate-on-scroll delay-200">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-4xl md:text-5xl font-extrabold text-blue-700 mb-6 flex items-center justify-center animate-on-scroll delay-300">
+                    <span class="mr-3">✨</span> What is Password Vault?
+                </h2>
+                <p class="text-lg md:text-xl text-gray-700 mb-10 leading-relaxed max-w-3xl mx-auto animate-on-scroll delay-400">
+                    Password Vault is your personal, highly secure desktop application for managing all digital credentials.
+                    Built with modern technology, it provides a native and intuitive experience on both macOS and Windows,
+                    ensuring your sensitive data remains absolutely private, under your control, and offline.
+                </p>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 text-left">
+                    <div id="benefits-box" onclick="toggleGlow('benefits-box')" class="p-8 bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg shadow-xl cursor-pointer border-2 border-purple-300 ring-4 ring-purple-100/50 hover:ring-purple-200/70 transition-all duration-300 transform hover:scale-[1.02] animate-on-scroll delay-500">
+                        <h3 class="text-3xl font-bold text-purple-800 mb-4 flex items-center">
+                            <span class="mr-3 text-4xl">💎</span> Core Benefits
+                        </h3>
+                        <ul class="list-none text-purple-700 space-y-3 text-lg">
+                            <li class="flex items-start transition-transform duration-200 list-item-hover">
+                                <span class="mr-2 text-xl mt-1">🔒</span>
+                                <div>
+                                    <strong>Uncompromised Security:</strong> Your sensitive data is encrypted locally on your device, ensuring it never touches remote cloud servers.
+                                </div>
+                            </li>
+                            <li class="flex items-start transition-transform duration-200 list-item-hover">
+                                <span class="mr-2 text-xl mt-1">🚀</span>
+                                <div>
+                                    <strong>Complete Autonomy:</strong> You retain full ownership and control over your personal vault. No third-party access, ever.
+                                </div>
+                            </li>
+                            <li class="flex items-start transition-transform duration-200 list-item-hover">
+                                <span class="mr-2 text-xl mt-1">✈️</span>
+                                <div>
+                                    <strong>Offline Accessibility:</strong> Manage and access your passwords anytime, anywhere, even without an internet connection.
+                                </div>
+                            </li>
+                            <li class="flex items-start transition-transform duration-200 list-item-hover">
+                                <span class="mr-2 text-xl mt-1">✨</span>
+                                <div>
+                                    <strong>Intuitive Design:</strong> Enjoy a clean, simple, and delightful user experience built for effortless password management.
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="advantages-box" onclick="toggleGlow('advantages-box')" class="p-8 bg-gradient-to-br from-teal-50 to-teal-100 rounded-lg shadow-xl cursor-pointer border-2 border-teal-300 ring-4 ring-teal-100/50 hover:ring-teal-200/70 transition-all duration-300 transform hover:scale-[1.02] animate-on-scroll delay-600">
+                        <h3 class="text-3xl font-bold text-teal-800 mb-4 flex items-center">
+                            <span class="mr-3 text-4xl">🌟</span> Key Advantages
+                        </h3>
+                        <ul class="list-none text-teal-700 space-y-3 text-lg">
+                            <li class="flex items-start transition-transform duration-200 list-item-hover">
+                                <span class="mr-2 text-xl mt-1">🖥️</span>
+                                <div>
+                                    <strong>Native Desktop Experience:</strong> Seamless integration and optimal performance on both macOS and Windows operating systems.
+                                </div>
+                            </li>
+                            <li class="flex items-start transition-transform duration-200 list-item-hover">
+                                <span class="mr-2 text-xl mt-1">⚙️</span>
+                                <div>
+                                    <strong>Robust Encryption Algorithms:</strong> Utilizes industry-standard cryptographic techniques to safeguard your secrets with military-grade protection.
+                                </div>
+                            </li>
+                            <li class="flex items-start transition-transform duration-200 list-item-hover">
+                                <span class="mr-2 text-xl mt-1">⚡</span>
+                                <div>
+                                    <strong>Lightning Fast Access:</strong> Quickly search, copy, and manage your credentials with minimal effort.
+                                </div>
+                            </li>
+                            <li class="flex items-start transition-transform duration-200 list-item-hover">
+                                <span class="mr-2 text-xl mt-1">🔄</span>
+                                <div>
+                                    <strong>Effortless Data Management:</strong> Easily backup, restore, or transfer your encrypted vault for peace of mind and flexibility.
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action / Re-Download Section -->
+        <section id="download-section" class="bg-gradient-to-r from-red-500 to-pink-600 p-8 md:p-12 rounded-xl shadow-xl text-white text-center animate-on-scroll delay-700">
+            <h2 class="text-4xl md:text-5xl font-extrabold mb-6 animate-on-scroll delay-800">
+                Ready to Secure Your Digital Life?
+            </h2>
+            <p class="text-lg md:text-xl mb-10 opacity-90 animate-on-scroll delay-900">
+                Download Password Vault today and take control of your online security.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6 animate-on-scroll delay-1000">
+                <!-- Download Button for macOS -->
+                <a href="https://github.com/priyansu2820/password-vault-app/releases/download/v1.0.8/Password.Vault-1.0.0-universal.dmg"
+                   class="inline-flex items-center justify-center px-8 py-4 border border-transparent text-xl font-bold rounded-xl shadow-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-offset-2 transition-all duration-300 transform hover:scale-105 active:scale-95 group">
+                    <svg class="w-7 h-7 mr-3 transition-transform group-hover:rotate-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1h-1.25M15 10l4.55 4.55M14.5 14.5l3.227 3.227M6 10l-4.55 4.55M9 14.5L5.773 17.727M21 12v3a2 2 0 01-2 2H5a2 2 0 01-2-2v-3m18-6H3a2 2 0 00-2 2v2a2 2 0 002 2h18a2 2 0 002-2V8a2 2 0 00-2-2z"></path></svg>
+                    Download for macOS
+                </a>
+
+                <!-- Download Button for Windows -->
+                <a href="https://github.com/priyansu2820/password-vault-app/releases/download/v1.0.8/Password.Vault.Setup.1.0.0.exe"
+                   class="inline-flex items-center justify-center px-8 py-4 border border-white text-xl font-bold rounded-xl shadow-lg text-blue-900 bg-white hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-blue-300 focus:ring-offset-2 transition-all duration-300 transform hover:scale-105 active:scale-95 group">
+                    <svg class="w-7 h-7 mr-3 transition-transform group-hover:rotate-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1h-1.25M15 10l4.55 4.55M14.5 14.5l3.227 3.227M6 10l-4.55 4.55M9 14.5L5.773 17.727M21 12v3a2 2 0 01-2 2H5a2 2 0 01-2-2v-3m18-6H3a2 2 0 00-2 2v2a2 2 0 002 2h18a2 2 0 002-2V8a2 2 0 00-2-2z"></path></svg>
+                    Download for Windows
+                </a>
+            </div>
+        </section>
+
+        <!-- Contact Us Section - NEWLY ADDED -->
+        <section id="contact-us" class="bg-white p-8 md:p-12 rounded-xl shadow-xl mt-12 animate-on-scroll delay-800">
+            <div class="max-w-xl mx-auto text-center">
+                <h2 class="text-4xl md:text-5xl font-extrabold text-indigo-700 mb-6 flex items-center justify-center">
+                    <span class="mr-3">📬</span> Get in Touch
+                </h2>
+                <p class="text-lg md:text-xl text-gray-700 mb-6 leading-relaxed">
+                    Have questions, feedback, or need support? Feel free to reach out to me directly!
+                </p>
+                <p class="text-xl md:text-2xl font-bold text-indigo-800 mb-8">
+                    Email: <a href="mailto:YOUR_EMAIL_ADDRESS" class="contact-email-link">priyansukundu2820@gmail.com</a>
+                </p>
+                <p class="text-md text-gray-600">
+                    I'll do my best to respond as quickly as possible.
+                </p>
+                <p class="mt-8 text-sm text-gray-500">
+                    For technical issues, you can also visit our <a href="https://github.com/priyansu2820/password-vault-app/issues" target="_blank" class="text-blue-600 hover:underline">Issues page</a>.
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="w-full bg-gray-900 p-6 text-center text-gray-400 mt-auto shadow-inner">
+        &copy; 2025 Password Vault. All rights reserved @priyansukundu. Crafted with care.
+    </footer>
+
+    <script>
+        // Function for the click-to-glow effect
+        function toggleGlow(elementId) {
+            const element = document.getElementById(elementId);
+            if (element) {
+                element.classList.toggle('glow-active');
+            }
+        }
+
+        // Intersection Observer for scroll-triggered animations
+        document.addEventListener('DOMContentLoaded', () => {
+            const animateElements = document.querySelectorAll('.animate-on-scroll');
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-in-view'); // Add a class to trigger animation
+                        observer.unobserve(entry.target); // Stop observing once animated
+                    }
+                });
+            }, {
+                root: null, // relative to the viewport
+                rootMargin: '0px',
+                threshold: 0.1 // Trigger when 10% of the element is visible
+            });
+
+            animateElements.forEach(element => {
+                observer.observe(element);
+            });
+        });
+    </script>
+</body>
+</html>
