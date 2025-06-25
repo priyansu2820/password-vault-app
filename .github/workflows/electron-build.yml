@@ -2,8 +2,8 @@ name: Electron App Build
 
 on:
   push:
-    branches:
-      - main # Temporarily trigger on pushes to main for easier testing
+    tags:
+      - 'v*' # Now triggers only when a new tag like v1.0.0 is pushed
 
 jobs:
   build:
@@ -61,7 +61,7 @@ jobs:
   release:
     needs: build
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' # Trigger release on main branch pushes for testing
+    if: github.ref_type == 'tag' # Now triggers only if a tag (e.g., v1.0.0) was pushed
     permissions:
       contents: write
     steps:
@@ -78,8 +78,27 @@ jobs:
           files: |
             artifacts/macOS-build/*.dmg
             artifacts/Windows-build/*.exe
-          name: Debug Release - Main Branch
-          tag_name: temp-release-${{ github.sha }} # Use SHA for unique tag name on main pushes
-          body: "This is a temporary debug release triggered by a main branch push."
-          draft: true # Set to draft so it doesn't clutter releases
-          prerelease: true # Set to prerelease for testing
+          name: Release ${{ github.ref_name }} # Uses the actual tag name for the release name
+          tag_name: ${{ github.ref_name }}     # Uses the actual tag name for the GitHub release tag
+          body: |
+            # Password Vault ${{ github.ref_name }}
+
+            This is a new release of the Password Vault application.
+
+            **Features:**
+            - Secure master password setup and login
+            - Local password storage with strong encryption
+            - Add, edit, and delete password entries
+            - Copy username and password to clipboard (auto-clears after 15 seconds)
+            - Search and filter password entries
+            - Forgot Password feature (resets master password and clears old vault data)
+            - Light/Dark mode toggle
+            - About screen
+
+            **Download below:**
+            - `Password Vault.dmg` for macOS
+            - `Password Vault Setup.exe` for Windows
+
+            Please report any issues on the GitHub repository.
+          draft: false      # Set to false to publish the release immediately
+          prerelease: false # Set to false for a stable release
